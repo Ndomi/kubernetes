@@ -1,0 +1,20 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+    name: EKS-Cluster-Autoscaler
+    region: us-east-1
+
+nodeGroups:
+    - name: scale-east1a
+      instanceType: t2.micro
+      desiredCapacity: 1
+      maxSize: 10
+      availabilityZones: ["us-east-1a"]
+      iam:
+          withAddonPolicies:
+              autoScaler: true
+      labels:
+        nodegroup-type: stateful-workload
+        instance-type: onDemand
+      ssh:
+          publicKeyName: k8-labs

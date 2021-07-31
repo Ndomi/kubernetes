@@ -60,3 +60,20 @@ eksctl delete nodegroup --include=<nodegroup> --approve
 
     # If the nodegroup was deployed using YAML
     eksctl delete nodegroup --config-file=<ABC.yml> --include=<nodegroup> --approve
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Cluster Autoscaler
+------------------
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/autoscaler/master/cluster-autoscaler/cloudprovider/aws/examples/cluster-autoscaler-autodiscover.yaml
+
+
+    # Ensure that the autoscaler does not evict it pods
+     kubectl -n kube-system annotate deployment.apps/cluster-autoscaler cluster-autoscaler.kubernetes.io/safe-to-evict="false" --overwrite
+
+# Edit the Autoscaler and change the cluster version number to match your running Version(This is where you get the version Number "https://github.com/kubernetes/autoscaler/releases?after=vertical-pod-autoscaler-0.9.2")
+# And insert you cluster name
+
+kubectl -n kube-system edit deployment.apps/cluster-autoscaler
+
+# Run the below to check
+kubectl -n kube-system describe deployment
