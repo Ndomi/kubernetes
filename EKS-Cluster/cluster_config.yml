@@ -6,7 +6,9 @@ metadata:
 nodeGroup:
     - name: ng-1
       instanceType: t2.small
-      desiredCapacity: 3
+      minSize: 1
+      maxSize: 4
+      desiredCapacity: 2
       ssh:
           publicKeyName: k8-labs
     - name: ng-mixed

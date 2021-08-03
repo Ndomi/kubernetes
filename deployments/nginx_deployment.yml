@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
     name: test-autoscaler
 spec:
-    replicas: 1
+    replicas: 2
     selector:
         matchLabels:
             service: nginx
@@ -19,7 +19,7 @@ spec:
                   resources:
                       limits:
                           cpu: 300m
-                          memory: 512Mi
+                          memory: 100Mi
                       requests:
                           cpu: 300m
-                          memory: 512Mi
+                          memory: 100Mi
