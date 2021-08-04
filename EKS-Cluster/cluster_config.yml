@@ -10,4 +10,4 @@ nodeGroups:
       maxSize: 4
       desiredCapacity: 2
       ssh:
-          publicKeyName: k8-labs
+          publicKeyName: live_keys
