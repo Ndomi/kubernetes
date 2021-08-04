@@ -27,6 +27,9 @@ eksctl version
 *** Create eks cluster ***
 eksctl create cluster --name dev-cluster --version 1.16 --region us-east-1 --nodegroup-name standard-workers --node-type t3.micro --nodes 3 --nodes-min 1 --nodes-max 4 --managed
 
+                      OR
+eksctl create cluster -f cluster.yaml
+
         --- Check cluster info ---
         eksctl get nodegroup  --cluster <cluster name>
 
@@ -219,4 +222,3 @@ Adding k8s cluster read-only user
       Check the access:
       -----------------
         - kubectl  run nginx2 --image=nginx --restart=Never -n production
-
