@@ -81,3 +81,142 @@ kubectl -n kube-system describe deployment
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Implementing Autoscaling
 ------------------------
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Configure Cluster Monitoring
+----------------------------
+
+See cluster-monitoring.yml in Monitoring Folder
+  - In this case, I named it  cluster-monitoring.yml
+
+Enable EKS Cluster CloudWatch Monitoring
+----------------------------
+eksctl utils update-cluster-logging --config-file cluster-monitoring.yml --approve
+
+
+Disable all EKS Cluster CloudWatch Monitoring
+---------------------------------------------
+eksctl utils update-cluster-logging --name=<cluster name> --disable-types all --approve
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Installing and deploying through HELM
+--------------------------------------
+
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+
+Add the helm REPO
+-----------------
+helm repo add stable https://charts.helm.sh/stable
+
+helm repo list
+helm repo update
+
+Doing a search
+--------------
+helm search repo
+
+Install redis, using helm
+-------------------------
+helm install redis-test stable/redis
+
+kubectl get pods
+
+kubectl get pods
+
+Clean update
+------------
+helm uninstall redis-test
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+RBAC for IAM users
+++++++++++++++++++
+
+Adding k8s cluster admin
+------------------------
+  - Add AIM user. Don't add any AWS Permissions
+
+  Get ConfigMap
+  -------------
+    - kubectl  -n kube-system get cm
+    
+        - note the "aws-auth" ConfigMap
+
+  Edit the "aws-auth" ConfigMap
+  -----------------------------
+  - kubectl  -n kube-system get cm aws-auth -o yaml > aws-auth-config.yml
+      - Edit aws-auth-config.yml (See RBAC folder) 
+
+  For more reference on RBAC, use the below link:
+  -----------------------------------------------
+    - https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+
+  Apply the "aws-auth-config.yml" changes
+  ---------------------------------------
+    - kubectl apply -f aws-auth-config.yml -n kube-system
+
+  Check if the user is there:
+  ---------------------------
+    - kubectl -n kube-system describe cm aws-auth
+
+  Edit ~/.aws/credentials with the users "Access key ID" and "Secret access key"
+  ------------------------------------------------------------------------------
+
+  Figure out which user is active
+  -------------------------------
+    - aws sts get-caller-identity
+
+  Export our newly created user:
+  ------------------------------
+    - export AWS_PROFILE="clusteradmin"
+            * This will change the user to "k8s-cluster-admin"(this was created in IAM)
+
+  Check the access:
+  -----------------
+    - kubectl get nodes
+    - kubectl get pod -n kube-system
+    - kubectl run nginx --image=nginx --restart=Never
+
+
+Adding k8s cluster read-only user
+---------------------------------
+    Create a namespace for production:
+      - kubectl create namespace production
+
+    Create the IAM user in AWS Console
+    
+
+    Specify the role for our user
+      - vim role.yml (see RBAC folder)
+
+    Bind user to the role
+      - vim rolebinding.yml (rolebinding.yml)
+
+    apply roles and role-binding
+      - kubectl apply -f role.yml
+      - kubectl apply -f rolebinding.yml
+
+    Edit the "aws-auth" ConfigMap
+    -----------------------------
+      - kubectl  -n kube-system get cm aws-auth -o yaml > aws-auth-config.yml
+
+      - Edit aws-auth-config.yml (See RBAC folder) 
+
+      Edit ~/.aws/credentials with the users "Access key ID" and "Secret access key"
+      ------------------------------------------------------------------------------
+
+      Figure out which user is active
+      -------------------------------
+        - aws sts get-caller-identity
+
+      Export our newly created user:
+      ------------------------------
+        - export AWS_PROFILE="prodviewer"
+            * This will change the user to "k8s-cluster-admin"(this was created in IAM)
+
+      Check the access:
+      -----------------
+        - kubectl  run nginx2 --image=nginx --restart=Never -n production
+
