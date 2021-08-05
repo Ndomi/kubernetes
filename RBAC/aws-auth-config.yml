@@ -4,21 +4,18 @@ data:
     - groups:
       - system:bootstrappers
       - system:nodes
-      rolearn: arn:aws:iam::942839947321:role/eksctl-dev-cluster-nodegroup-stan-NodeInstanceRole-1OYC3QQA1F04K
+      rolearn: arn:aws:iam::225908212644:role/eksctl-EKS-Cluster-nodegroup-ng-1-NodeInstanceRole-LSGSV3AC03XV
       username: system:node:{{EC2PrivateDNSName}}
   mapUsers: |
-    - userarn: arn:aws:iam::942839947321:user/k8s-cluster-admin
-      username:  k8s-cluster-admin
+    - userarn: arn:aws:iam::225908212644:user/k8-admin
+      username: k8-admin
       groups:
         - system:masters
-    - userarn: arn:aws:iam::942839947321:user/prod-viewer
-      username: prod-viewer
-      groups:
-        - prod-viewer-role
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2021-08-04T08:44:00Z"
+  creationTimestamp: "2021-08-05T15:22:45Z"
   name: aws-auth
-  namespace: kube-system 
-  resourceVersion: "1512"
-  uid: 276dd5f1-1736-489a-a1ff-76754db896bb
+  namespace: kube-system
+  resourceVersion: "2158"
+  selfLink: /api/v1/namespaces/kube-system/configmaps/aws-auth
+  uid: fe587bf3-d966-4c4e-87c9-ae31310c2529
