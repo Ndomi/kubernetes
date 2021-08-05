@@ -222,3 +222,13 @@ Adding k8s cluster read-only user
       Check the access:
       -----------------
         - kubectl  run nginx2 --image=nginx --restart=Never -n production
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Deploy Dashbaord
+----------------
+
+Edit the following, You will find it in dashboard folder:
+    - admin-service-account.yml
+
+Go to "https://github.com/kubernetes/dashboard" and follow the steps
+        kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep -i eks-course-admin | awk '{print $1}')
