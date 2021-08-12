@@ -1,0 +1,9 @@
+[default]
+aws_access_key_id=AKIATJGJNYOSDLSMFD6P
+aws_secret_access_key=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
+region=us-east-1
+
+[k8-admin]
+aws_access_key_id=AKIATJGJNYOSMGMEIVTR
+aws_secret_access_key=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
+region=us-east-1

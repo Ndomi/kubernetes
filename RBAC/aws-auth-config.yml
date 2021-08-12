@@ -7,8 +7,8 @@ data:
       rolearn: arn:aws:iam::225908212644:role/eksctl-EKS-Cluster-nodegroup-ng-1-NodeInstanceRole-LSGSV3AC03XV
       username: system:node:{{EC2PrivateDNSName}}
   mapUsers: |
-    - userarn: arn:aws:iam::225908212644:user/k8-admin
-      username: k8-admin
+    - userarn: arn:aws:iam::225908212644:user/Ndomi
+      username: Ndomi
       groups:
         - system:masters
 kind: ConfigMap

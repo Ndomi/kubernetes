@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: test-claim
+  # No namespace, PVs are global
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 1Gi
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /data
+    server: fs-a7f3a013.efs.us-east-1.amazonaws.com

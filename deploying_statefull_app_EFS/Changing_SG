@@ -1,0 +1,8 @@
+Changing SG:
+------------
+	1. Use Cluster wide SG
+	2. Go to EFS Cluster
+	3. Go to Network
+	4. Click "Manage"
+	5. remove the default SG
+	6. Attach the Cluster wide SG

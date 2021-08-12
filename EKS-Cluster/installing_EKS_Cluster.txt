@@ -229,6 +229,7 @@ Deploy Dashbaord
 
 Edit the following, You will find it in dashboard folder:
     - admin-service-account.yml
-
+    - kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+    
 Go to "https://github.com/kubernetes/dashboard" and follow the steps
         kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep -i eks-course-admin | awk '{print $1}')
